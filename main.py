@@ -18,12 +18,12 @@ url_count = len(urls)
 is_first = 0
 is_last = url_count - 1
 
-print(f"Attempting to add {url_count} from provided links.csv file...\n")
+print(f"Attempting to add {url_count} sources from provided links.csv file...\n")
 
 # Initialise browser session
 
 with sync_playwright() as sp:
-    browser = sp.chromium.launch(headless=True, channel="chrome")
+    browser = sp.chromium.launch(headless=False, channel="chrome")
     context = browser.new_context(storage_state="state.json")
     page = context.new_page()
 
@@ -47,11 +47,11 @@ with sync_playwright() as sp:
         page.keyboard.press("Enter")
 
         checkbox_container = page.locator(
-            "div.select-checkbox-container"
+            "div.single-source-container"
         ).nth(-1)
         checkbox_container.wait_for(state="visible")
 
-        checkbox = checkbox_container.locator("mat-checkbox")
+        checkbox = checkbox_container.locator(".mdc-checkbox__mixedmark").nth(-1)
         checkbox.wait_for(state="visible")
 
         if i < is_last:
@@ -62,7 +62,7 @@ with sync_playwright() as sp:
 
         print(f"Source {i+1}/{url_count} ({u}) added.")
 
-        page.wait_for_timeout(1000)
+        page.wait_for_timeout(750)
 
     print("\nAll sources added.")
 
