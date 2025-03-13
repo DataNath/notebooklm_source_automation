@@ -3,6 +3,8 @@ import time
 
 start = time.time()
 
+notebook_name = input("Set a name for your new notebook: ")
+
 # Create a list of urls, taken from links.csv
 
 urls = []
@@ -18,7 +20,7 @@ url_count = len(urls)
 is_first = 0
 is_last = url_count - 1
 
-print(f"Attempting to add {url_count} sources from provided links.csv file...\n")
+print(f"\nAttempting to add {url_count} sources from provided links.csv file...\n")
 
 # Initialise browser session
 
@@ -43,16 +45,25 @@ with sync_playwright() as sp:
 
         website_url_input = page.locator("[formcontrolname='newUrl']")
         website_url_input.wait_for(state="visible")
-        website_url_input.fill(f"{u}")
+        website_url_input.fill(u)
         page.keyboard.press("Enter")
 
         checkbox_container = page.locator(
             "div.single-source-container"
-        ).nth(-1)
+        ).last
         checkbox_container.wait_for(state="visible")
 
-        checkbox = checkbox_container.locator(".mdc-checkbox__mixedmark").nth(-1)
+        loading_spinner = checkbox_container.locator(".mat-mdc-progress-spinner")
+
+        loading_spinner.wait_for(state="detached")
+
+        checkbox = checkbox_container.locator(
+            "input.mdc-checkbox__native-control.mdc-checkbox--selected"
+        )
         checkbox.wait_for(state="visible")
+        expect(checkbox).not_to_have_attribute("ariaLabel", u)
+
+        page.wait_for_timeout(1000)
 
         if i < is_last:
 
@@ -62,9 +73,15 @@ with sync_playwright() as sp:
 
         print(f"Source {i+1}/{url_count} ({u}) added.")
 
-        page.wait_for_timeout(750)
+    print("\nFinished adding sources.\n")
 
-    print("\nAll sources added.")
+    title_box = page.locator(".title-input")
+    title_box.click()
+    page.keyboard.press("Control+A")
+    title_box.fill(notebook_name)
+
+    print("Title updated!\n")
+
 
     browser.close()
 
