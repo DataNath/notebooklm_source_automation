@@ -1,76 +1,36 @@
 from playwright.sync_api import sync_playwright, expect
-import time
+from functions import add_link_sources, file_handler
+import time, sys
 
-start = time.time()
+source_type = input("Enter a source type (Website or YouTube): ").strip().lower()
 
 notebook_name = input("Set a name for your new notebook: ")
 
-# Create a list of urls, taken from links.csv
+start = time.time()
 
-urls = []
+method_dict = {
+    "website": add_link_sources,
+    "youtube": add_link_sources
+}
 
-with open("sources/links.csv", mode="r", encoding="utf-8") as contents:
-    next(contents)
-
-    for i in contents:
-        link = i.strip()
-        urls.append(link)
-
-url_count = len(urls)
-is_first = 0
-is_last = url_count - 1
-
-print(f"Attempting to add {url_count} sources from provided links.csv file...\n")
+method = method_dict.get(source_type)
+if not method:
+    print(f"{source_type} is not a supported source type!")
+    sys.exit()
+elif method in ("website", "youtube"):
+    file_handler(source_type)
 
 # Initialise browser session
 
 with sync_playwright() as sp:
-    browser = sp.chromium.launch(headless=True, channel="chrome")
+    browser = sp.chromium.launch(headless=False, channel="chrome")
     context = browser.new_context(storage_state="state.json")
     page = context.new_page()
 
     page.goto("https://notebooklm.google.com/")
+    page.wait_for_load_state()
 
-    for i, u in enumerate(urls):
-
-        if i == is_first:
-
-            new_notebook_button = page.get_by_role("button", name="Create new notebook")
-            new_notebook_button.wait_for(state="attached")
-            new_notebook_button.click()
-
-        website_button = page.locator("span.mdc-evolution-chip__text-label", has_text="Website")
-        website_button.wait_for(state="attached")
-        website_button.click()
-
-        website_url_input = page.locator("[formcontrolname='newUrl']")
-        website_url_input.wait_for(state="attached")
-        website_url_input.fill(u)
-        page.keyboard.press("Enter")
-
-        checkbox_container = page.locator(
-            "div.single-source-container"
-        ).last
-        checkbox_container.wait_for(state="attached")
-
-        loading_spinner = checkbox_container.locator(".mat-mdc-progress-spinner")
-        loading_spinner.wait_for(state="detached")
-
-        checkbox = checkbox_container.locator(
-            "input.mdc-checkbox__native-control.mdc-checkbox--selected"
-        )
-        checkbox.wait_for(state="attached")
-        expect(checkbox).not_to_have_attribute("ariaLabel", u)
-
-        page.wait_for_timeout(1200)
-
-        if i < is_last:
-
-            add_source_button = page.get_by_role("button", name="Add source")
-            add_source_button.wait_for(state="attached")
-            add_source_button.click()
-
-        print(f"Source {i+1}/{url_count} ({u}) added.")
+    method(source_type, page)
 
     print("\nFinished adding sources.\n")
 
@@ -93,8 +53,6 @@ elapsed = round(end - start)
 if elapsed > 59:
     minutes = elapsed // 60
     seconds = elapsed % 60
-
     print(f"Time elapsed: {minutes} minutes and {seconds} seconds.")
-
 else:
     print(f"Time elapsed: {elapsed} seconds.")
