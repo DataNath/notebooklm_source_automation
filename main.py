@@ -9,7 +9,7 @@ notebook_name = input("Set a name for your new notebook: ")
 
 urls = []
 
-with open("links.csv", mode="r", encoding="utf-8") as contents:
+with open("sources/links.csv", mode="r", encoding="utf-8") as contents:
     next(contents)
 
     for i in contents:
