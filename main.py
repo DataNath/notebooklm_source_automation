@@ -20,7 +20,7 @@ url_count = len(urls)
 is_first = 0
 is_last = url_count - 1
 
-print(f"\nAttempting to add {url_count} sources from provided links.csv file...\n")
+print(f"Attempting to add {url_count} sources from provided links.csv file...\n")
 
 # Initialise browser session
 
@@ -67,7 +67,7 @@ with sync_playwright() as sp:
 
         if i < is_last:
 
-            add_source_button = page.get_by_label("Add source")
+            add_source_button = page.get_by_role("button", name="Add source")
             add_source_button.wait_for(state="visible")
             add_source_button.click()
 
@@ -79,6 +79,7 @@ with sync_playwright() as sp:
     title_box.click()
     page.keyboard.press("Control+A")
     title_box.fill(notebook_name)
+    title_box.press("Enter")
 
     print("Title updated!\n")
 
@@ -88,4 +89,12 @@ with sync_playwright() as sp:
 end = time.time()
 
 elapsed = round(end - start)
-print(f"Time elapsed: {elapsed} seconds.")
+
+if elapsed > 59:
+    minutes = elapsed // 60
+    seconds = elapsed & minutes
+
+    print(f"Time elapsed: {minutes} minutes and {seconds} seconds.")
+
+else:
+    print(f"Time elapsed: {elapsed} seconds.")
