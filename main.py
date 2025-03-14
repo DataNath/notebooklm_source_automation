@@ -54,7 +54,6 @@ with sync_playwright() as sp:
         checkbox_container.wait_for(state="attached")
 
         loading_spinner = checkbox_container.locator(".mat-mdc-progress-spinner")
-
         loading_spinner.wait_for(state="detached")
 
         checkbox = checkbox_container.locator(
