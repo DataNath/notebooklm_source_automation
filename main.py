@@ -1,8 +1,10 @@
 from playwright.sync_api import sync_playwright, expect
 from functions import add_link_sources, create_source_list
+from pathlib import Path as p
 import time, sys
 
-source_type = input("Enter a source type (Website or YouTube): ").strip().lower()
+source_type_raw = input("Enter a source type (Website or YouTube): ")
+source_type = source_type_raw.strip().lower()
 
 notebook_name = input("Set a name for your new notebook: ")
 
@@ -17,7 +19,7 @@ method = method_dict.get(source_type)
 
 try:
     if not method:
-        print(f"{source_type} is not a supported source type!")
+        print(f"{source_type_raw} is not a supported source type!")
         sys.exit()
 
     urls = create_source_list(source_type)
@@ -29,8 +31,10 @@ except ValueError as e:
 # Initialise browser session
 
 with sync_playwright() as sp:
+    login_state_path = p(__file__).parent / "state.json"
+
     browser = sp.chromium.launch(headless=False, channel="chrome")
-    context = browser.new_context(storage_state="state.json")
+    context = browser.new_context(storage_state=str(login_state_path))
     page = context.new_page()
 
     page.goto("https://notebooklm.google.com/")
