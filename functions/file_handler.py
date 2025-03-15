@@ -1,8 +1,11 @@
+from pathlib import Path as p
 import sys, os
 
 def create_source_list(source_type) -> list:
 
-    file_name = f"./sources/{source_type}_links.csv"
+    root_directory = p(__file__).parents[1]
+
+    file_name = root_directory / "sources" / f"{source_type}_links.csv"
 
     if not os.path.exists(file_name):
         raise ValueError(
