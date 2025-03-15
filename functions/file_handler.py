@@ -7,14 +7,14 @@ def create_source_list(source_type) -> list:
 
     file_name = root_directory / "sources" / f"{source_type}_links.csv"
 
-    if not os.path.exists(file_name):
+    if not file_name.exists():
         raise ValueError(
             f"{source_type}_links.csv doesn't exist or is in the wrong location."
         )
 
     urls = []
 
-    with open(file_name, mode="r", encoding="utf-8") as contents:
+    with open(str(file_name), mode="r", encoding="utf-8", newline="") as contents:
         next(contents)
 
         blank_lines = 0

@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright, expect
 from functions import add_link_sources, create_source_list
+from pathlib import Path as p
 import time, sys
 
 source_type_raw = input("Enter a source type (Website or YouTube): ")
@@ -30,8 +31,10 @@ except ValueError as e:
 # Initialise browser session
 
 with sync_playwright() as sp:
+    login_state_path = p(__file__).parent / "state.json"
+
     browser = sp.chromium.launch(headless=False, channel="chrome")
-    context = browser.new_context(storage_state="state.json")
+    context = browser.new_context(storage_state=str(login_state_path))
     page = context.new_page()
 
     page.goto("https://notebooklm.google.com/")
