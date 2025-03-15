@@ -1,5 +1,5 @@
 from playwright.sync_api import sync_playwright, expect
-from functions import add_link_sources, file_handler
+from functions import add_link_sources, create_source_list
 import time, sys
 
 source_type = input("Enter a source type (Website or YouTube): ").strip().lower()
@@ -14,11 +14,17 @@ method_dict = {
 }
 
 method = method_dict.get(source_type)
-if not method:
-    print(f"{source_type} is not a supported source type!")
+
+try:
+    if not method:
+        print(f"{source_type} is not a supported source type!")
+        sys.exit()
+
+    urls = create_source_list(source_type)
+    
+except ValueError as e:
+    print(e)
     sys.exit()
-elif method in ("website", "youtube"):
-    file_handler(source_type)
 
 # Initialise browser session
 
@@ -30,7 +36,7 @@ with sync_playwright() as sp:
     page.goto("https://notebooklm.google.com/")
     page.wait_for_load_state()
 
-    method(source_type, page)
+    method(source_type, urls, page)
 
     print("\nFinished adding sources.\n")
 

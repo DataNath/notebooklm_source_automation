@@ -1,25 +1,10 @@
 from playwright.sync_api import sync_playwright, expect
+from .file_handler import create_source_list
 import re
 
 # Create a list of urls, taken from links.csv
 
-def add_link_sources(source_type: str, page) -> None:
-
-    urls = []
-
-    with open(f"sources/{source_type}_links.csv", mode="r", encoding="utf-8") as contents:
-        next(contents)
-
-        blank_lines = 0
-        for i in contents:
-            link = i.strip()
-            if link:
-                urls.append(link)
-            else:
-                blank_lines += 1
-
-        if blank_lines > 0:
-            print(f"\nNote: {blank_lines} empty records from your {source_type}_csv file skipped.")
+def add_link_sources(source_type: str, urls: list, page) -> None:
 
     url_count = len(urls)
     is_first = 0
@@ -69,3 +54,6 @@ def add_link_sources(source_type: str, page) -> None:
             add_source_button.click()
 
         print(f"Source {i+1}/{url_count} ({u}) added.")
+
+if __name__ == "__main__":
+    print("This script requires the page object from main. It can't be ran in isolation.")
