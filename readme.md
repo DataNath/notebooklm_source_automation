@@ -53,13 +53,21 @@ pip install -r requirements.txt
 
 This will install Playwright and its transitive dependencies.
 
-<h3>4. Provide your source links</h3>
+<h3>4. Install Chromium browser</h3>
+
+```
+playwright install chromium
+```
+
+This installs the [Chromium](https://www.chromium.org/Home/) browser that this project runs on.
+
+<h3>5. Provide your source links</h3>
 
 The project is set up to read a list of up to 300 (NotebookLM's limit) link-based sources from the relevant file within `/sources`. By cloning this repository these will already exist as empty files (other than a header) for you to populate.
 
 <b>If you create your own file(s) and overwrite the existing, make sure the schema is identical i.e. a single field with a maximum of 300 source rows starting on the second row.</b>
 
-<h3>5. Set your Google login state</h3>
+<h3>6. Set your Google login state</h3>
 
 ```
 python set_login_state.py
@@ -69,7 +77,7 @@ This will launch a browser and prompt you to login to Google. Once complete, you
 
 <b>I haven't tested/checked exact persistence but, for context, only had to re-run the login script once whilst developing the initial release.</b>
 
-<h3>6. Run!</h3>
+<h3>7. Run!</h3>
 
 ```
 python main.py
