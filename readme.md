@@ -34,7 +34,7 @@ Follow the steps below to use this yourself!
 <h3>1. Clone this repository</h3>
 
 ```
-git clone 
+git clone https://github.com/DataNath/notebooklm_source_automation.git
 ```
 
 <h3>2. Create a virtual environment (optional)</h3>
