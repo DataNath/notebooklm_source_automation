@@ -91,3 +91,5 @@ This will prompt you for two things:
 <h2>Feedback and/or issues</h2>
 
 Please feel free to leave any feeback or suggestions for improvement. If you spot any issues, let me know and I'll endeavour to address them as soon as I can!
+
+<p align="right">(<a href="#readme-top">Back to top</a>)</p>
