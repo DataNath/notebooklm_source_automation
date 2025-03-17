@@ -24,7 +24,7 @@ However, as pointed out by colleagues and in various Reddit posts, the process f
 - Paste the source URL
 - Hit enter/press 'Insert'
 
-This might be fine for a handful of sources but, given you can create notebooks using up to 300 sources, you can see how this is less than ideal when scaled.
+This might be fine for a handful of sources but, given you can create notebooks of up to 300 sources, this is less than ideal when scaled.
 
 <h2>The solution</h2>
 
@@ -93,7 +93,7 @@ The project is set up to read a list of up to 300 (NotebookLM's limit) link-base
 python set_login_state.py
 ```
 
-This will launch a browser and prompt you to login to Google. Once complete, you should see a `state.json` file appear in your directory which is used to persist authentication and browser session data, saving you logging in before every run. Don't worry, this is already in `.gitignore`!
+This will launch a browser and prompt you to login to Google. Once complete, you should see a `state.json` file appear in your directory which is used to persist authentication and browser session data, saving you from having to log in before every run. Don't worry, this is already in `.gitignore`!
 
 >[!NOTE]
 >I haven't tested/checked exact persistence but, for context, only had to re-run the login script once whilst developing the initial release.
