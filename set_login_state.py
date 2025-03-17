@@ -1,7 +1,11 @@
 from playwright.sync_api import sync_playwright
 
 with sync_playwright() as p:
-    browser = p.chromium.launch(headless=False, channel="chrome")
+    browser = p.chromium.launch(
+        headless=False,
+        channel="chrome",
+        args=["--disable-blink-features=AutomationControlled"],
+    )
     context = browser.new_context()
     page = context.new_page()
 
