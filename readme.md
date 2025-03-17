@@ -38,7 +38,15 @@ Follow the steps below to use this yourself!
 git clone https://github.com/DataNath/notebooklm_source_automation.git
 ```
 
-<h3>2. Create a virtual environment (optional)</h3>
+If you're in Documents for example, this will create a new subdirectory here with the project's contents.
+
+<h3>2. Move into the new directory</h3>
+
+```
+cd notebooklm_source_automation
+```
+
+<h3>3. Create a virtual environment (optional)</h3>
 
 ```
 python -m venv .venv
@@ -46,7 +54,15 @@ python -m venv .venv
 
 This step isn't strictly necessary but is good practice for isolation and keeping projects lean in terms of packages and so on.
 
-<h3>3. Install required packages</h3>
+<h3>4. Activate your virtual environment</h3>
+
+```
+.venv\scripts\activate
+```
+
+Again, this isn't strictly necessary i.e. if you're not using a venv as outlined in the step above.
+
+<h3>5. Install required packages</h3>
 
 ```
 pip install -r requirements.txt
@@ -54,7 +70,7 @@ pip install -r requirements.txt
 
 This will install Playwright and its transitive dependencies.
 
-<h3>4. Install Chromium browser</h3>
+<h3>6. Install Chromium browser</h3>
 
 ```
 playwright install chromium
@@ -62,14 +78,14 @@ playwright install chromium
 
 This installs the [Chromium](https://www.chromium.org/Home/) browser that this project runs on.
 
-<h3>5. Provide your source links</h3>
+<h3>7. Provide your source links</h3>
 
 The project is set up to read a list of up to 300 (NotebookLM's limit) link-based sources from the relevant file within `/sources`. By cloning this repository these will already exist as empty files (other than a header) for you to populate.
 
 >[!WARNING]
 >If you create your own file(s) and overwrite the existing, make sure the schema is identical i.e. a single field with a maximum of 300 source rows starting on the second row.
 
-<h3>6. Set your Google login state</h3>
+<h3>8. Set your Google login state</h3>
 
 ```
 python set_login_state.py
@@ -80,7 +96,7 @@ This will launch a browser and prompt you to login to Google. Once complete, you
 >[!NOTE]
 >I haven't tested/checked exact persistence but, for context, only had to re-run the login script once whilst developing the initial release.
 
-<h3>7. Run!</h3>
+<h3>9. Run!</h3>
 
 ```
 python main.py
