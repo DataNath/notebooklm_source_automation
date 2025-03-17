@@ -17,16 +17,18 @@ Google's [NotebookLM](https://notebooklm.google.com/) is a tool - powered by Goo
 - Links: Website or YouTube
 - Paste text: Manually paste in text like meeting notes
 
-The issue? As pointed out by colleagues and in various Reddit posts, the process for adding link-based sources is incredibly cumbersome; users need to continuously:
+However, as pointed out by colleagues and in various Reddit posts, the process for adding link-based sources is incredibly cumbersome; users need to continuously:
 
 - Press 'Add source'
 - Select 'Website' or 'YouTube'
 - Paste the source URL
 - Hit enter/press 'Insert'
 
+This might be fine for a handful of sources but, given you can create notebooks using up to 300 sources, you can see how this is less than ideal when scaled.
+
 <h2>The solution</h2>
 
-Given we have a repeated pattern of behaviour in terms of how sources are added, this process is perfect for browser automation, and that's exactly what is used here. Using [Playwright](https://playwright.dev/python/) - a library created specifically for end-to-end testing and general browser automation tooling - we can easily loop through the steps outlined above to create a new notebook populated with your desired sources.
+Given we have a repeated pattern of behaviour in terms of how sources are added, this process is a perfect candidate for browser automation, and that's exactly what is used here. Using [Playwright](https://playwright.dev/python/) - a library created specifically for end-to-end testing and general browser automation tooling - we can easily loop through the steps outlined above to create a new notebook populated with your desired sources.
 
 <h2>How do I use this?</h2>
 
