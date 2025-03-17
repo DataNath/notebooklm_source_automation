@@ -19,7 +19,7 @@ Google's [NotebookLM](https://notebooklm.google.com/) is a tool - powered by Goo
 
 The issue? As pointed out by colleagues and in various Reddit posts, the process for adding link-based sources is incredibly cumbersome; users need to continuously:
 
-- Press 'Add source
+- Press 'Add source'
 - Select 'Website' or 'YouTube'
 - Paste the source URL
 - Hit enter/press 'Insert'
