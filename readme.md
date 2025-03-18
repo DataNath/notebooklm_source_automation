@@ -36,7 +36,7 @@ Follow the steps below to use this yourself!
 
 <h3>1. Clone this repository</h3>
 
-```
+```shell
 git clone https://github.com/DataNath/notebooklm_source_automation.git
 ```
 
@@ -44,13 +44,13 @@ If you're in Documents for example, this will create a new subdirectory here wit
 
 <h3>2. Move into the new directory</h3>
 
-```
+```shell
 cd notebooklm_source_automation
 ```
 
 <h3>3. Create a virtual environment (optional)</h3>
 
-```
+```shell
 python -m venv .venv
 ```
 
@@ -58,15 +58,23 @@ This step isn't strictly necessary but is good practice for isolation and keepin
 
 <h3>4. Activate your virtual environment</h3>
 
-```
+For Windows users:
+
+```shell
 .venv\scripts\activate
+```
+
+For Mac users:
+
+```shell
+source .venv/bin/activate
 ```
 
 Again, this isn't strictly necessary i.e. if you're not using a venv as outlined in the step above.
 
 <h3>5. Install required packages</h3>
 
-```
+```shell
 pip install -r requirements.txt
 ```
 
@@ -74,7 +82,7 @@ This will install Playwright and its transitive dependencies.
 
 <h3>6. Install Chromium browser</h3>
 
-```
+```shell
 playwright install chromium
 ```
 
@@ -89,24 +97,24 @@ The project is set up to read a list of up to 300 (NotebookLM's limit) link-base
 
 <h3>8. Set your Google login state</h3>
 
-```
+```shell
 python set_login_state.py
 ```
 
-This will launch a browser and prompt you to login to Google. Once complete, you should see a `state.json` file appear in your directory which is used to persist authentication and browser session data, saving you from having to log in before every run. Don't worry, this is already in `.gitignore`!
+A browser will launch and prompt you to login to Google. Once complete, hit ENTER - the script will terminate and you should see a `state.json` file appear in your directory. This is used to persist authentication and browser session data, saving you from having to log in before every run. Don't worry, this is already in `.gitignore`!
 
 >[!NOTE]
 >I haven't tested/checked exact persistence but, for context, only had to re-run the login script once whilst developing the initial release.
 
 <h3>9. Run!</h3>
 
-```
+```shell
 python main.py
 ```
 
-This will prompt you for two things:
+This will prompt you to provide two things in the terminal:
 
-- A source type (currently only Website or YouTube)
+- A source type (currently only 'Website' or 'YouTube')
 - A name for the new notebook
 
 <h2>Feedback and/or issues</h2>
