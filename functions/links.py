@@ -31,7 +31,11 @@ def add_link_sources(source_type: str, urls: list, page) -> None:
         link_url_input = page.locator("[formcontrolname='newUrl']")
         link_url_input.wait_for(state="attached")
         link_url_input.fill(u)
-        page.keyboard.press("Enter")
+
+        insert_button = page.get_by_role("button", name="Insert")
+        expect(insert_button).to_be_enabled()
+        insert_button.click()
+        # page.keyboard.press("Enter")
 
         source_container = page.locator("div.single-source-container").last
         source_container.wait_for(state="attached")
