@@ -33,7 +33,7 @@ except ValueError as e:
 with sync_playwright() as sp:
     login_state_path = p(__file__).parent / "state.json"
 
-    browser = sp.chromium.launch(headless=False, channel="chrome")
+    browser = sp.chromium.launch(headless=True, channel="chrome")
     context = browser.new_context(storage_state=str(login_state_path))
     page = context.new_page()
 
